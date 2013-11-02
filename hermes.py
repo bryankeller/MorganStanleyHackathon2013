@@ -15,12 +15,13 @@ def main():
 	processTurn(num)
 
 def initializeGame():
+	headers = {'content-type': 'application/json'}
 	payload = {
 		'Command' : 'INIT',
 		'Token' : '63b92b83-041d-4fac-a4db-07be7219f604',
 		'ChangeRequest' : None
 	}
-	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=payload)
+	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=json.dumps(payload), headers=headers)
 	replyDict = json.loads(reply.text)
 	print 'Game has started'
 	quickInfo(replyDict)
@@ -30,25 +31,29 @@ def processTurn(num):
 	replies = []
 	posts = []
 
-	while True:
+	i = 0
+	while i < 4:
 		lastReply = play()
 		replies.append(lastReply)
 		emptyPost = JSONPostData()
 		post = algorithm(emptyPost, replies) #returns the dict of json file
 		change(post)
 		posts.append(post)
+		i = i + 1
+		printStats(lastReply)
 		#printStats(lastReply)
 		#if((int(lastReply['ServerState']['TurnNo'])%num)==0):
 			#quickInfo(lastReply)
 	
 def algorithm(post, replies):
 	newPost = JSONPostData()
-	lastReply = replies[len(replies)-1]
-
+	lastReply = replies[-1]
 	#generates a summary report every 15 turns
 	turnNo = int(lastReply['ServerState']['TurnNo'])
 	#print "Replies sizeee: "+str(len(replies))
 	#print "Turn Nono: "+ str(turnNo)
+	newPost.setWebNodeCounts(eu=3)
+
 	if((turnNo%15)==0 and turnNo!=0):
 		summary(replies);
 
@@ -93,20 +98,22 @@ def summary(replies):
 
 
 def change(request):
+	headers = {'content-type': 'application/json'}
 	payload = {
 		'Command' : 'CHNG',
 		'Token' : '63b92b83-041d-4fac-a4db-07be7219f604',
 		'ChangeRequest' : request
 	}
-	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=json.dumps(payload))
+	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=json.dumps(payload), headers=headers)
 
 def play():
+	headers = {'content-type': 'application/json'}
 	payload = {
 		'Command' : 'PLAY',
 		'Token' : '63b92b83-041d-4fac-a4db-07be7219f604',
 		'ChangeRequest' : None
 	}
-	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=payload)
+	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=json.dumps(payload), headers=headers)
 	replyDict = json.loads(reply.text)
 	return replyDict
 
