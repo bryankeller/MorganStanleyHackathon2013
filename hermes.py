@@ -3,7 +3,10 @@ import requests
 import json
 from pprint import pprint
 import time
-import JSONPostData
+from JSONPostData import JSONPostData
+
+from processReply import *
+
 
 def main():
 	print "Enter turn printing interval: "
@@ -21,42 +24,39 @@ def initializeGame():
 	replyDict = json.loads(reply.text)
 	print 'Game has started'
 	quickInfo(replyDict)
-	#wait()
 	return reply
 
 def processTurn(num):
 	replies = []
-	lastReply = None
+	posts = []
+
 	while True:
+		emptyPost = JSONPostData()
+		post = algorithm(emptyPost, replies) #returns the dict of json file
+		change(post)
+		lastReply = play()
+
 		replies.append(lastReply)
-		jtool = getJson()#Creates a new jtool
-		jDict = algorithm(jtool, replies)#returns the dict of json file
-		change(jDict)
-		lastReply = play()#array of all replies
+		posts.append(post)
+		printStats(lastReply)
 		#if((int(lastReply['ServerState']['TurnNo'])%num)==0):
 			#quickInfo(lastReply)
 	
-def algorithm(jDict, replies):
-	lastReply = replies[len(replies)-1]
+def algorithm(post, replies):
+	if len(replies):
+		lastReply = replies[-1]
 
-	#num of successful transfactions in each region
-	if(lastReply != None):
-		print lastReply['ServerState']['TurnNo']
-		print "------------------"
-		naNodes = lastReply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["NA"]["NoOfTransactionsSuceeded"]
-		euNodes = lastReply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["EU"]["NoOfTransactionsSuceeded"]
-		apNodes = lastReply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["AP"]["NoOfTransactionsSuceeded"]
+		# --- Algorithm goes here ----
 
-		naSuccesses = lastReply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["NA"]["NodeCount"]
-		euSuccesses = lastReply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["EU"]["NodeCount"]
-		apSuccesses = lastReply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["AP"]["NodeCount"]
+		if profitEarned(lastReply) > 100:
+			post.setWebNodeCounts(eu=10)
 
-		print "[NA]  Nodes:" + str(naNodes) + ", Successes: " + str(naSuccesses)
-		print "[EU]  Nodes:" + str(euNodes) + ", Successes: " + str(euSuccesses)
-		print "[AP]  Nodes:" + str(apNodes) + ", Successes: " + str(apSuccesses)
-		print "  "
-	reply = jDict.getGeneratedJSONPostData()
-	return reply
+
+
+		# ----------------------------
+
+	return post.getGeneratedJSONPostData()
+
 
 
 def change(json):
@@ -76,22 +76,6 @@ def play():
 	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=payload)
 	replyDict = json.loads(reply.text)
 	return replyDict
-
-def getJson():
-	jtool = JSONPostData.JSONPostData()
-	return jtool
-
-def quickInfo(replyDict):
-	turn = replyDict['ServerState']['TurnNo']
-	bank = replyDict['ServerState']['ProfitAccumulated']
-	profit = replyDict['ServerState']['ProfitEarned']
-	error = replyDict['Error']
-	print "Turn: "+str(turn)
-	print "Turn Profit: $"+str(profit)
-	print "Bankroll: $"+str(bank)
-	if error != None:
-		print "ERROR: "+str(error)
-	print "-------------------"
 
 if __name__ == '__main__':
 	main()
