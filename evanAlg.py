@@ -141,54 +141,100 @@ def algorithm(jDict, replies):
 
 		naWebAdjust = euWebAdjust = apWebAdjust = 0
 		naJavaAdjust = euJavaAdjust = apJavaAdjust = 0
+		naDBAdjust = euDBAdjust = apDBAdjust = 0
 
 		#Making adjustments for web servers
-		if(naWebLoad > 100):
+		if(naWebLoad > 115):
+			naWebAdjust = 3
+		elif(naWebLoad > 80):
 			naWebAdjust = 2
 		elif(naWebLoad > 50):
 			naWebAdjust = 1
 		elif(naWebLoad < 60):
-			if (naWebNodes!=1):
+			if(naWebLoad < 20):
+				if (naWebNodes>5):
+					naWebAdjust = -5
+			elif(naWebLoad < 40):
+				if (naWebNodes>3):
+					naWebAdjust = -3
+			elif (naWebNodes!=1):
 				naWebAdjust = -1
 
-		if(euWebLoad > 100):
+		if(euWebLoad > 115):
+			euWebAdjust = 3
+		elif(euWebLoad > 80):
 			euWebAdjust = 2
 		elif(euWebLoad > 50):
 			euWebAdjust = 1
 		elif(euWebLoad < 60):
-			if (euWebNodes!=1):
+			if(euWebLoad < 20):
+				if (euWebNodes>5):
+					euWebAdjust = -5
+			elif(euWebLoad < 40):
+				if (euWebNodes>3):
+					euWebAdjust = -3
+			elif (euWebNodes!=1):
 				euWebAdjust = -1
 
-		if(apWebLoad > 100):
+		if(apWebLoad > 115):
+			apWebAdjust = 3
+		elif(apWebLoad > 80):
 			apWebAdjust = 2
 		elif(apWebLoad > 50):
 			apWebAdjust = 1
 		elif(apWebLoad < 60):
-			if (apWebNodes!=1):
+			if(apWebLoad < 20):
+				if (apWebNodes>5):
+					apWebAdjust = -5
+			elif(apWebLoad < 40):
+				if (apWebNodes>3):
+					apWebAdjust = -3
+			elif (apWebNodes!=1):
 				apWebAdjust = -1
 
 		#making adjustments for java
 		if(naJavaLoad > 125):
 			naJavaAdjust = 1
-		elif(naJavaLoad < 75):
-			if (naJavaNodes!=1):
-				naJavaAdjust = -1
-
-		if(euJavaLoad > 125):
-			euJavaAdjust = 1
+		elif(naJavaLoad < 22):
+			if (naJavaNodes>3):
+				naJavaAdjust = -3
 		elif(euJavaLoad < 75):
 			if (euJavaNodes!=1):
 				euJavaAdjust = -1
 
+		if(euJavaLoad > 125):
+			euJavaAdjust = 1
+		elif(euJavaLoad < 22):
+			if (euJavaNodes>3):
+				euJavaAdjust = -3
+		elif(euJavaLoad < 75):
+			if (euJavaNodes!=1):	
+				euJavaAdjust = -1
+
 		if(apJavaLoad > 125):
 			apJavaAdjust = 2
-		elif(apJavaLoad < 75):
-			if (apJavaNodes!=1):
-				apJavaAdjust = -1
+		elif(apJavaLoad < 22):
+			if (apJavaNodes>3):
+				apJavaAdjust = -3
+		elif(euJavaLoad < 75):
+			if (euJavaNodes!=1):
+				euJavaAdjust = -1
+
+		#making adjustments for db
+		if(euDBLoad > 400):
+			euDBAdjust = 1
+		elif(euDBLoad < 130):
+			if(euDBNodes>3):
+				euDBAdjust = -3
+		elif(euDBLoad < 250):
+			if(euDBNodes!=1):
+				euDBAdjust = -1
+
 
 
 		jDict.setWebNodeCounts(naWebAdjust, euWebAdjust, apWebAdjust)
 		jDict.setJavaNodeCounts(naJavaAdjust, euJavaAdjust, apJavaAdjust)
+		jDict.setDBNodeCounts(naDBAdjust, euDBAdjust, apDBAdjust)
 
 
 		print "Turn: " + str(turnNo)
