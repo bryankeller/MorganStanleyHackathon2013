@@ -59,13 +59,13 @@ def algorithm(post, replies):
 
 
 
-def change(json):
+def change(request):
 	payload = {
 		'Command' : 'CHNG',
 		'Token' : '63b92b83-041d-4fac-a4db-07be7219f604',
-		'ChangeRequest' : json
+		'ChangeRequest' : request
 	}
-	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=payload)
+	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=json.dumps(payload))
 
 def play():
 	payload = {
