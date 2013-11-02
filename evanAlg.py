@@ -1,16 +1,15 @@
-def algorithm(post, replies):
-	newPost = JSONPostData()
+def algorithm(jDict, replies):
 	lastReply = replies[len(replies)-1]
 
 	#generates a summary report every 15 turns
-	turnNo = int(lastReply['ServerState']['TurnNo'])
-	newPost.setWebNodeCounts(1,1,1)
+	turnNo = lastReply.turnNo()
+	jDict.setWebNodeCounts(1,1,1)
 	#print "Replies sizeee: "+str(len(replies))
 	#print "Turn Nono: "+ str(turnNo)
 	if((turnNo%15)==0 and turnNo!=0):
 		summary(replies);
 
-	reply = newPost.getGeneratedJSONPostData()
+	reply = jDict.getGeneratedJSONPostData()
 	return reply
 
 def summary(replies):
