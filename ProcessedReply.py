@@ -23,6 +23,12 @@ class ProcessedReply:
 		apTran = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["AP"]["NoOfTransactionsExecuted"]
 		return {'na' : naTran, 'eu' : euTran, 'ap' : apTran}
 
+	def inputNums(self):
+		naTran = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["NA"]["NoOfTransactionsInput"]
+		euTran = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["EU"]["NoOfTransactionsInput"]
+		apTran = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["AP"]["NoOfTransactionsInput"]
+		return {'na' : naTran, 'eu' : euTran, 'ap' : apTran}
+
 	def turnNo(self):
 		return self.reply['ServerState']['TurnNo']
 
