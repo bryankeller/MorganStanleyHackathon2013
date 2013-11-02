@@ -25,17 +25,36 @@ def initializeGame():
 	return reply
 
 def processTurn(num):
+	replies = []
+	lastReply = None
 	while True:
+		replies.append(lastReply)
 		jtool = getJson()#Creates a new jtool
-		jDict = algorithm(jtool)#returns the dict of json file
+		jDict = algorithm(jtool, replies)#returns the dict of json file
 		change(jDict)
-		lastReply = play()
-		if((int(lastReply['ServerState']['TurnNo'])%num)==0):
-			quickInfo(lastReply)
+		lastReply = play()#array of all replies
+		#if((int(lastReply['ServerState']['TurnNo'])%num)==0):
+			#quickInfo(lastReply)
 	
-def algorithm(jDict):
-	
+def algorithm(jDict, replies):
+	lastReply = replies[len(replies)-1]
 
+	#num of successful transfactions in each region
+	if(lastReply != None):
+		print lastReply['ServerState']['TurnNo']
+		print "------------------"
+		naNodes = lastReply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["NA"]["NoOfTransactionsSuceeded"]
+		euNodes = lastReply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["EU"]["NoOfTransactionsSuceeded"]
+		apNodes = lastReply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["AP"]["NoOfTransactionsSuceeded"]
+
+		naSuccesses = lastReply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["NA"]["NodeCount"]
+		euSuccesses = lastReply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["EU"]["NodeCount"]
+		apSuccesses = lastReply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["AP"]["NodeCount"]
+
+		print "[NA]  Nodes:" + str(naNodes) + ", Successes: " + str(naSuccesses)
+		print "[EU]  Nodes:" + str(euNodes) + ", Successes: " + str(euSuccesses)
+		print "[AP]  Nodes:" + str(apNodes) + ", Successes: " + str(apSuccesses)
+		print "  "
 	reply = jDict.getGeneratedJSONPostData()
 	return reply
 
