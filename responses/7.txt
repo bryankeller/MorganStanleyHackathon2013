@@ -1,0 +1,395 @@
+{
+    "Error": null,
+    "ServerState": {
+        "CostIncured": 400,
+        "CostPerServer": 50,
+        "DisqualifyTimeInMilliSeconds": 10,
+        "InfraStructureUpgradeLevels": [
+            {
+                "Name": "DEFAULT",
+                "NoOfTurnsRequired": 0,
+                "TransactionBenefit": 0,
+                "UpgradeCost": 0
+            },
+            {
+                "Name": "LEVEL1",
+                "NoOfTurnsRequired": 5200,
+                "TransactionBenefit": 60,
+                "UpgradeCost": 60000
+            },
+            {
+                "Name": "LEVEL2",
+                "NoOfTurnsRequired": 5200,
+                "TransactionBenefit": 60,
+                "UpgradeCost": 120000
+            }
+        ],
+        "InfraStructureUpgradeState": {
+            "Key": "DEFAULT",
+            "Value": -1
+        },
+        "PlayFileName": "4W",
+        "ProfitAccumulated": 685355,
+        "ProfitConstant": 3,
+        "ProfitEarned": 1208,
+        "ResearchUpgradeLevels": [
+            {
+                "CostPerServerBenefit": 0,
+                "DBReplicationBenefit": 0,
+                "FailOverBenefit": 0,
+                "Name": "DEFAULT",
+                "NoOfTurnsRequired": 0,
+                "TransactionBenefit": 0,
+                "UpgradeCost": 0
+            },
+            {
+                "CostPerServerBenefit": 27,
+                "DBReplicationBenefit": 0,
+                "FailOverBenefit": 0,
+                "Name": "GRID",
+                "NoOfTurnsRequired": 104000,
+                "TransactionBenefit": 0,
+                "UpgradeCost": 5000
+            },
+            {
+                "CostPerServerBenefit": 15,
+                "DBReplicationBenefit": 0,
+                "FailOverBenefit": 0,
+                "Name": "GREEN",
+                "NoOfTurnsRequired": 104000,
+                "TransactionBenefit": 50,
+                "UpgradeCost": 5000
+            },
+            {
+                "CostPerServerBenefit": 0,
+                "DBReplicationBenefit": 0,
+                "FailOverBenefit": 0,
+                "Name": "LOW_LATENCY",
+                "NoOfTurnsRequired": 104000,
+                "TransactionBenefit": 100,
+                "UpgradeCost": 5000
+            },
+            {
+                "CostPerServerBenefit": 0,
+                "DBReplicationBenefit": 0,
+                "FailOverBenefit": 50,
+                "Name": "WAN_COMPRESSION",
+                "NoOfTurnsRequired": 104000,
+                "TransactionBenefit": 0,
+                "UpgradeCost": 5000
+            },
+            {
+                "CostPerServerBenefit": 0,
+                "DBReplicationBenefit": 50,
+                "FailOverBenefit": 0,
+                "Name": "DB_REPLICATION",
+                "NoOfTurnsRequired": 104000,
+                "TransactionBenefit": 0,
+                "UpgradeCost": 5000
+            }
+        ],
+        "ResearchUpgradeState": {
+            "DEFAULT": -1
+        },
+        "ServerTiers": {
+            "DB": {
+                "ServerPerformance": {
+                    "CapactityLevels": [
+                        {
+                            "IsAtOverload": false,
+                            "LowerLimit": 1,
+                            "SuccessPercentage": 100,
+                            "UpperLimit": 1000
+                        },
+                        {
+                            "IsAtOverload": false,
+                            "LowerLimit": 1001,
+                            "SuccessPercentage": 90,
+                            "UpperLimit": 1200
+                        },
+                        {
+                            "IsAtOverload": true,
+                            "LowerLimit": 1201,
+                            "SuccessPercentage": 50,
+                            "UpperLimit": 1400
+                        },
+                        {
+                            "IsAtOverload": false,
+                            "LowerLimit": 1401,
+                            "SuccessPercentage": 0,
+                            "UpperLimit": 2147483647
+                        }
+                    ],
+                    "DBReplicationLevels": [
+                        {
+                            "RegionFrom": "EU",
+                            "RegionTo": "NA",
+                            "SuccessPercentage": 80
+                        },
+                        {
+                            "RegionFrom": "NA",
+                            "RegionTo": "EU",
+                            "SuccessPercentage": 80
+                        },
+                        {
+                            "RegionFrom": "AP",
+                            "RegionTo": "NA",
+                            "SuccessPercentage": 70
+                        },
+                        {
+                            "RegionFrom": "NA",
+                            "RegionTo": "AP",
+                            "SuccessPercentage": 70
+                        },
+                        {
+                            "RegionFrom": "AP",
+                            "RegionTo": "EU",
+                            "SuccessPercentage": 70
+                        },
+                        {
+                            "RegionFrom": "EU",
+                            "RegionTo": "AP",
+                            "SuccessPercentage": 70
+                        }
+                    ],
+                    "FailOverLevels": [
+                        {
+                            "RegionFrom": "EU",
+                            "RegionTo": "NA",
+                            "SuccessPercentage": 90
+                        },
+                        {
+                            "RegionFrom": "NA",
+                            "RegionTo": "EU",
+                            "SuccessPercentage": 90
+                        },
+                        {
+                            "RegionFrom": "AP",
+                            "RegionTo": "NA",
+                            "SuccessPercentage": 90
+                        },
+                        {
+                            "RegionFrom": "NA",
+                            "RegionTo": "AP",
+                            "SuccessPercentage": 90
+                        },
+                        {
+                            "RegionFrom": "AP",
+                            "RegionTo": "EU",
+                            "SuccessPercentage": 90
+                        },
+                        {
+                            "RegionFrom": "EU",
+                            "RegionTo": "AP",
+                            "SuccessPercentage": 90
+                        }
+                    ]
+                },
+                "ServerRegions": {
+                    "AP": {
+                        "NoOfTransactionsExecuted": 0,
+                        "NoOfTransactionsInput": 63,
+                        "NoOfTransactionsSuceeded": 0,
+                        "NodeChangeState": [],
+                        "NodeCount": 0
+                    },
+                    "EU": {
+                        "NoOfTransactionsExecuted": 536,
+                        "NoOfTransactionsInput": 536,
+                        "NoOfTransactionsSuceeded": 536,
+                        "NodeChangeState": [],
+                        "NodeCount": 1
+                    },
+                    "NA": {
+                        "NoOfTransactionsExecuted": 0,
+                        "NoOfTransactionsInput": 286,
+                        "NoOfTransactionsSuceeded": 0,
+                        "NodeChangeState": [],
+                        "NodeCount": 0
+                    }
+                },
+                "ServerShutdownTurnTime": 2,
+                "ServerStartTurnTime": 8
+            },
+            "JAVA": {
+                "ServerPerformance": {
+                    "CapactityLevels": [
+                        {
+                            "IsAtOverload": false,
+                            "LowerLimit": 1,
+                            "SuccessPercentage": 100,
+                            "UpperLimit": 400
+                        },
+                        {
+                            "IsAtOverload": false,
+                            "LowerLimit": 401,
+                            "SuccessPercentage": 90,
+                            "UpperLimit": 500
+                        },
+                        {
+                            "IsAtOverload": true,
+                            "LowerLimit": 501,
+                            "SuccessPercentage": 50,
+                            "UpperLimit": 600
+                        },
+                        {
+                            "IsAtOverload": false,
+                            "LowerLimit": 601,
+                            "SuccessPercentage": 0,
+                            "UpperLimit": 2147483647
+                        }
+                    ],
+                    "DBReplicationLevels": null,
+                    "FailOverLevels": [
+                        {
+                            "RegionFrom": "EU",
+                            "RegionTo": "NA",
+                            "SuccessPercentage": 90
+                        },
+                        {
+                            "RegionFrom": "NA",
+                            "RegionTo": "EU",
+                            "SuccessPercentage": 90
+                        },
+                        {
+                            "RegionFrom": "AP",
+                            "RegionTo": "NA",
+                            "SuccessPercentage": 80
+                        },
+                        {
+                            "RegionFrom": "NA",
+                            "RegionTo": "AP",
+                            "SuccessPercentage": 80
+                        },
+                        {
+                            "RegionFrom": "AP",
+                            "RegionTo": "EU",
+                            "SuccessPercentage": 80
+                        },
+                        {
+                            "RegionFrom": "EU",
+                            "RegionTo": "AP",
+                            "SuccessPercentage": 80
+                        }
+                    ]
+                },
+                "ServerRegions": {
+                    "AP": {
+                        "NoOfTransactionsExecuted": 63,
+                        "NoOfTransactionsInput": 63,
+                        "NoOfTransactionsSuceeded": 63,
+                        "NodeChangeState": [],
+                        "NodeCount": 1
+                    },
+                    "EU": {
+                        "NoOfTransactionsExecuted": 223,
+                        "NoOfTransactionsInput": 223,
+                        "NoOfTransactionsSuceeded": 223,
+                        "NodeChangeState": [],
+                        "NodeCount": 1
+                    },
+                    "NA": {
+                        "NoOfTransactionsExecuted": 286,
+                        "NoOfTransactionsInput": 286,
+                        "NoOfTransactionsSuceeded": 286,
+                        "NodeChangeState": [],
+                        "NodeCount": 1
+                    }
+                },
+                "ServerShutdownTurnTime": 1,
+                "ServerStartTurnTime": 4
+            },
+            "WEB": {
+                "ServerPerformance": {
+                    "CapactityLevels": [
+                        {
+                            "IsAtOverload": false,
+                            "LowerLimit": 1,
+                            "SuccessPercentage": 100,
+                            "UpperLimit": 180
+                        },
+                        {
+                            "IsAtOverload": false,
+                            "LowerLimit": 181,
+                            "SuccessPercentage": 90,
+                            "UpperLimit": 200
+                        },
+                        {
+                            "IsAtOverload": true,
+                            "LowerLimit": 201,
+                            "SuccessPercentage": 50,
+                            "UpperLimit": 250
+                        },
+                        {
+                            "IsAtOverload": false,
+                            "LowerLimit": 251,
+                            "SuccessPercentage": 0,
+                            "UpperLimit": 2147483647
+                        }
+                    ],
+                    "DBReplicationLevels": null,
+                    "FailOverLevels": [
+                        {
+                            "RegionFrom": "EU",
+                            "RegionTo": "NA",
+                            "SuccessPercentage": 70
+                        },
+                        {
+                            "RegionFrom": "NA",
+                            "RegionTo": "EU",
+                            "SuccessPercentage": 70
+                        },
+                        {
+                            "RegionFrom": "AP",
+                            "RegionTo": "NA",
+                            "SuccessPercentage": 50
+                        },
+                        {
+                            "RegionFrom": "NA",
+                            "RegionTo": "AP",
+                            "SuccessPercentage": 50
+                        },
+                        {
+                            "RegionFrom": "AP",
+                            "RegionTo": "EU",
+                            "SuccessPercentage": 50
+                        },
+                        {
+                            "RegionFrom": "EU",
+                            "RegionTo": "AP",
+                            "SuccessPercentage": 50
+                        }
+                    ]
+                },
+                "ServerRegions": {
+                    "AP": {
+                        "NoOfTransactionsExecuted": 63,
+                        "NoOfTransactionsInput": 63,
+                        "NoOfTransactionsSuceeded": 63,
+                        "NodeChangeState": [],
+                        "NodeCount": 1
+                    },
+                    "EU": {
+                        "NoOfTransactionsExecuted": 250,
+                        "NoOfTransactionsInput": 357,
+                        "NoOfTransactionsSuceeded": 223,
+                        "NodeChangeState": [],
+                        "NodeCount": 1
+                    },
+                    "NA": {
+                        "NoOfTransactionsExecuted": 286,
+                        "NoOfTransactionsInput": 286,
+                        "NoOfTransactionsSuceeded": 286,
+                        "NodeChangeState": [],
+                        "NodeCount": 2
+                    }
+                },
+                "ServerShutdownTurnTime": 0,
+                "ServerStartTurnTime": 2
+            }
+        },
+        "TransactionTime": "2013-10-18T05:06:00",
+        "TurnNo": 652
+    },
+    "Status": 0
+}
