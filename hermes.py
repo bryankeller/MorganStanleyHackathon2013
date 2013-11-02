@@ -5,8 +5,10 @@ from pprint import pprint
 import time
 
 def main():
+	print "Enter turn printing interval: "
+	num = int(raw_input())
 	initializeGame()
-	processTurn()
+	processTurn(num)
 
 def initializeGame():
 	payload = {
@@ -21,11 +23,10 @@ def initializeGame():
 	#wait()
 	return reply
 
-def processTurn():
+def processTurn(num):
 	while True:
 		change()
-		play()
-	
+		play(num)
 	
 
 def change():
@@ -37,7 +38,7 @@ def change():
 	}
 	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=payload)
 
-def play():
+def play(num):
 	jsonDict = getDummyJson()
 	payload = {
 		'Command' : 'PLAY',
@@ -46,7 +47,7 @@ def play():
 	}
 	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=payload)
 	replyDict = json.loads(reply.text)
-	if((int(replyDict['ServerState']['TurnNo'])%100)==0):
+	if((int(replyDict['ServerState']['TurnNo'])%num)==0):
 		quickInfo(replyDict)
 
 def getDummyJson():
@@ -62,7 +63,7 @@ def quickInfo(replyDict):
 	profit = replyDict['ServerState']['ProfitEarned']
 	print "Turn: "+str(turn)
 	print "Turn Profit: "+str(profit)
-	print "Bankroll Yo: "+str(bank)
+	print "Bankroll: "+str(bank)
 	print "-------------------"
 
 if __name__ == '__main__':
