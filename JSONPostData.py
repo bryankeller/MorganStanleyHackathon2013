@@ -31,9 +31,9 @@ class JSONPostData:
 		generatedJSON["Servers"]["DB"]["ServerRegions"]["AP"]["NodeCount"] = ap
 
 	def setShouldUpgradeInfraStructure(self, shouldUpgradeInfraStructure):
-		if(shouldUpgradeInfraStructure)
+		if(shouldUpgradeInfraStructure):
 			generatedJSON["Servers"]["UpgradeInfraStructure"] = "true"
-		else
+		else:
 			generatedJSON["Servers"]["UpgradeInfraStructure"] = "false"
 
 	def setUpgradeToResearch(self, upgrade):

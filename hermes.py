@@ -3,6 +3,7 @@ import requests
 import json
 from pprint import pprint
 import time
+import JSONPostData
 
 def main():
 	print "Enter turn printing interval: "
@@ -51,11 +52,9 @@ def play(num):
 		quickInfo(replyDict)
 
 def getDummyJson():
-	generatedJSON = json.load(open("standardJSON.json"))
-	return generatedJSON
-
-def wait():
-	idontgiveafuckinput = raw_input()
+	jtool = JSONPostData.JSONPostData()
+	newJson = jtool.getGeneratedJSONPostData()
+	return newJson
 
 def quickInfo(replyDict):
 	turn = replyDict['ServerState']['TurnNo']
