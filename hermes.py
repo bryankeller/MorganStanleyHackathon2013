@@ -6,7 +6,7 @@ import time
 from ProcessedReply import ProcessedReply
 from JSONPostData import JSONPostData
 import bryanAlg
-import liamAlg
+#import liamAlg
 import evanAlg
 
 
@@ -38,7 +38,7 @@ def processTurn(num):
 		lastReply = ProcessedReply(lastReply)
 		replies.append(lastReply)
 		emptyPost = JSONPostData()
-		post = bryanAlg.algorithm(emptyPost, replies) #returns the dict of json file
+		post = evanAlg.algorithm(emptyPost, replies) #returns the dict of json file
 		change(post)
 		posts.append(post)
 		# printStats(lastReply)
