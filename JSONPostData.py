@@ -6,9 +6,8 @@ class JSONPostData:
 
 	def __init__(self):
 		global generatedJSON
-
 		generatedJSON = json.load(open("standardJSON.json"))
-
+	
 	def setWebNodeCounts(self, na=0, eu=0, ap=0):
 		global generatedJSON
 

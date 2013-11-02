@@ -26,11 +26,12 @@ def initializeGame():
 
 def processTurn(num):
 	while True:
-		jtool = getJson()
-		jDict = algorithm(jtool)
-		quickInfo(jDict)
+		jtool = getJson()#Creates a new jtool
+		jDict = algorithm(jtool)#returns the dict of json file
 		change(jDict)
-		lastReply = play(num)
+		lastReply = play()
+		if((int(lastReply['ServerState']['TurnNo'])%num)==0):
+			quickInfo(lastReply)
 	
 def algorithm(jDict):
 	
@@ -47,7 +48,7 @@ def change(json):
 	}
 	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=payload)
 
-def play(num):
+def play():
 	payload = {
 		'Command' : 'PLAY',
 		'Token' : '63b92b83-041d-4fac-a4db-07be7219f604',
