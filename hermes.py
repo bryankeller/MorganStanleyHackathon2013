@@ -26,21 +26,28 @@ def initializeGame():
 
 def processTurn(num):
 	while True:
-		change()
-		play(num)
+		jtool = getJson()
+		jDict = algorithm(jtool)
+		quickInfo(jDict)
+		change(jDict)
+		lastReply = play(num)
+	
+def algorithm(jDict):
 	
 
-def change():
-	jsonDict = getDummyJson()
+	reply = jDict.getGeneratedJSONPostData()
+	return reply
+
+
+def change(json):
 	payload = {
 		'Command' : 'CHNG',
 		'Token' : '63b92b83-041d-4fac-a4db-07be7219f604',
-		'ChangeRequest' : jsonDict
+		'ChangeRequest' : json
 	}
 	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=payload)
 
 def play(num):
-	jsonDict = getDummyJson()
 	payload = {
 		'Command' : 'PLAY',
 		'Token' : '63b92b83-041d-4fac-a4db-07be7219f604',
@@ -48,21 +55,22 @@ def play(num):
 	}
 	reply = requests.post(r'http://hermes.wha.la/api/hermes', data=payload)
 	replyDict = json.loads(reply.text)
-	if((int(replyDict['ServerState']['TurnNo'])%num)==0):
-		quickInfo(replyDict)
+	return replyDict
 
-def getDummyJson():
+def getJson():
 	jtool = JSONPostData.JSONPostData()
-	newJson = jtool.getGeneratedJSONPostData()
-	return newJson
+	return jtool
 
 def quickInfo(replyDict):
 	turn = replyDict['ServerState']['TurnNo']
 	bank = replyDict['ServerState']['ProfitAccumulated']
 	profit = replyDict['ServerState']['ProfitEarned']
+	error = replyDict['Error']
 	print "Turn: "+str(turn)
 	print "Turn Profit: $"+str(profit)
 	print "Bankroll: $"+str(bank)
+	if error != None:
+		print "ERROR: "+str(error)
 	print "-------------------"
 
 if __name__ == '__main__':

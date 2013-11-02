@@ -40,4 +40,4 @@ class JSONPostData:
 		generatedJSON["Servers"]["UpgradeToResearch"] = upgrade
 
 	def getGeneratedJSONPostData(self):
-		return json.dumps(generatedJSON)
+		return generatedJSON
