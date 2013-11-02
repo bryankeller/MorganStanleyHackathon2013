@@ -24,16 +24,16 @@ class ProcessedReply:
 		return {'na' : naTran, 'eu' : euTran, 'ap' : apTran}
 
 	def turnNo(self):
-		return reply['ServerState']['TurnNo']
+		return self.reply['ServerState']['TurnNo']
 
 	def error(self):
-		return reply['Error']
+		return self.reply['Error']
 
 	def profitAccumulated(self):
-		return reply['ServerState']['ProfitAccumulated']
+		return self.reply['ServerState']['ProfitAccumulated']
 
 	def profitEarned(self):
-		return reply['ServerState']['ProfitEarned']
+		return self.reply['ServerState']['ProfitEarned']
 
 	# --- Print stuff ----
 
