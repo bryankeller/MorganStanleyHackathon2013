@@ -1,4 +1,8 @@
 def algorithm(jDict, replies):
+	naWebServers = 0
+	euWebServers = 0
+	apWebServers = 0
+
 	naRateOfChange = 0
 	euRateOfChange = 0
 	apRateOfChange = 0
@@ -15,13 +19,23 @@ def algorithm(jDict, replies):
 		euRateOfChange /= minuteInterval - 1
 		apRateOfChange /= minuteInterval - 1
 
-		print "NA Executed Transactions Rate of Change: " + str(naRateOfChange)
-		print "EU Executed Transactions Rate of Change: " + str(euRateOfChange)
-		print "AP Executed Transactions Rate of Change: " + str(apRateOfChange)
-		print "Current Profit: " + str(replies[len(replies) - 1].profitAccumulated())
-		# print "Executed: " + str(replies[len(replies) - 1].profitAccumulated())
-		# print "Successes: " + str(replies[len(replies) - 1].profitAccumulated())
-		print ""
+		if(naRateOfChange > 0.5):
+			naWebServers++;
+		else if(naRateOfChange < -0.5):
+			naWebServers++;
+
+		if(euRateOfChange > 0.5):
+			euWebServers++;
+		else if(euRateOfChange < -0.5):
+			euWebServers++;
+
+		if(apRateOfChange > 0.5):
+			apWebServers++;
+		else if(apRateOfChange < -0.5):
+			apWebServers++;
+
+
+		
 	
 	reply = jDict.getGeneratedJSONPostData()
 
