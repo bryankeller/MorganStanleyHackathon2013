@@ -5,28 +5,28 @@ class ProcessedReply:
 	def __init__(self, currentReply):
 		self.reply = currentReply
 
-	def successNums(self):
-		naSuccesses = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["NA"]["NoOfTransactionsSuceeded"]
-		euSuccesses = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["EU"]["NoOfTransactionsSuceeded"]
-		apSuccesses = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["AP"]["NoOfTransactionsSuceeded"]
+	def successNums(self, serverType):
+		naSuccesses = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["NA"]["NoOfTransactionsSuceeded"]
+		euSuccesses = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["EU"]["NoOfTransactionsSuceeded"]
+		apSuccesses = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["AP"]["NoOfTransactionsSuceeded"]
 		return {'na' : naSuccesses, 'eu' : euSuccesses, 'ap' : apSuccesses}
 
-	def nodeCounts(self):
-		naNodes = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["NA"]["NodeCount"]
-		euNodes = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["EU"]["NodeCount"]
-		apNodes = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["AP"]["NodeCount"]
+	def nodeCounts(self, serverType):
+		naNodes = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["NA"]["NodeCount"]
+		euNodes = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["EU"]["NodeCount"]
+		apNodes = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["AP"]["NodeCount"]
 		return {'na' : naNodes, 'eu' : euNodes, 'ap' : apNodes}
 
-	def executedNums(self):
-		naTran = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["NA"]["NoOfTransactionsExecuted"]
-		euTran = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["EU"]["NoOfTransactionsExecuted"]
-		apTran = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["AP"]["NoOfTransactionsExecuted"]
+	def executedNums(self, serverType):
+		naTran = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["NA"]["NoOfTransactionsExecuted"]
+		euTran = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["EU"]["NoOfTransactionsExecuted"]
+		apTran = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["AP"]["NoOfTransactionsExecuted"]
 		return {'na' : naTran, 'eu' : euTran, 'ap' : apTran}
 
-	def inputNums(self):
-		naTran = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["NA"]["NoOfTransactionsInput"]
-		euTran = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["EU"]["NoOfTransactionsInput"]
-		apTran = self.reply["ServerState"]["ServerTiers"]["WEB"]["ServerRegions"]["AP"]["NoOfTransactionsInput"]
+	def inputNums(self, serverType):
+		naTran = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["NA"]["NoOfTransactionsInput"]
+		euTran = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["EU"]["NoOfTransactionsInput"]
+		apTran = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["AP"]["NoOfTransactionsInput"]
 		return {'na' : naTran, 'eu' : euTran, 'ap' : apTran}
 
 	def turnNo(self):

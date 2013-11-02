@@ -34,7 +34,7 @@ def algorithm(jDict, replies):
 		else if(apRateOfChange < -0.5):
 			apWebServers++;
 
-
+		
 		
 	
 	reply = jDict.getGeneratedJSONPostData()

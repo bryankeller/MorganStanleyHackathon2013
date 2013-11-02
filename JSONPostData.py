@@ -24,9 +24,9 @@ class JSONPostData:
 
 	def setShouldUpgradeInfraStructure(self, shouldUpgradeInfraStructure):
 		if(shouldUpgradeInfraStructure):
-			self.generatedJSON["Servers"]["UpgradeInfraStructure"] = "true"
+			self.generatedJSON["Servers"]["UpgradeInfraStructure"] = True
 		else:
-			self.generatedJSON["Servers"]["UpgradeInfraStructure"] = "false"
+			self.generatedJSON["Servers"]["UpgradeInfraStructure"] = False
 
 	def setUpgradeToResearch(self, upgrade):
 		self.generatedJSON["Servers"]["UpgradeTosResearch"] = upgrade
