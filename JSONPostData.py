@@ -5,38 +5,31 @@ class JSONPostData:
 	generatedJSON = None
 
 	def __init__(self):
-		global generatedJSON
 		generatedJSON = json.load(open("standardJSON.json"))
 	
 	def setWebNodeCounts(self, na=0, eu=0, ap=0):
-		global generatedJSON
-
-		generatedJSON["Servers"]["WEB"]["ServerRegions"]["NA"]["NodeCount"] = na
-		generatedJSON["Servers"]["WEB"]["ServerRegions"]["EU"]["NodeCount"] = eu
-		generatedJSON["Servers"]["WEB"]["ServerRegions"]["AP"]["NodeCount"] = ap
+		self.generatedJSON["Servers"]["WEB"]["ServerRegions"]["NA"]["NodeCount"] = na
+		self.generatedJSON["Servers"]["WEB"]["ServerRegions"]["EU"]["NodeCount"] = eu
+		self.generatedJSON["Servers"]["WEB"]["ServerRegions"]["AP"]["NodeCount"] = ap
 
 	def setJavaNodeCounts(self, na=0, eu=0, ap=0):
-		global generatedJSON
-
-		generatedJSON["Servers"]["JAVA"]["ServerRegions"]["NA"]["NodeCount"] = na
-		generatedJSON["Servers"]["JAVA"]["ServerRegions"]["EU"]["NodeCount"] = eu
-		generatedJSON["Servers"]["JAVA"]["ServerRegions"]["AP"]["NodeCount"] = ap
+		self.generatedJSON["Servers"]["JAVA"]["ServerRegions"]["NA"]["NodeCount"] = na
+		self.generatedJSON["Servers"]["JAVA"]["ServerRegions"]["EU"]["NodeCount"] = eu
+		self.generatedJSON["Servers"]["JAVA"]["ServerRegions"]["AP"]["NodeCount"] = ap
 
 	def setDBNodeCounts(self, na=0, eu=0, ap=0):
-		global generatedJSON
-
-		generatedJSON["Servers"]["DB"]["ServerRegions"]["NA"]["NodeCount"] = na
-		generatedJSON["Servers"]["DB"]["ServerRegions"]["EU"]["NodeCount"] = eu
-		generatedJSON["Servers"]["DB"]["ServerRegions"]["AP"]["NodeCount"] = ap
+		self.generatedJSON["Servers"]["DB"]["ServerRegions"]["NA"]["NodeCount"] = na
+		self.generatedJSON["Servers"]["DB"]["ServerRegions"]["EU"]["NodeCount"] = eu
+		self.generatedJSON["Servers"]["DB"]["ServerRegions"]["AP"]["NodeCount"] = ap
 
 	def setShouldUpgradeInfraStructure(self, shouldUpgradeInfraStructure):
 		if(shouldUpgradeInfraStructure):
-			generatedJSON["Servers"]["UpgradeInfraStructure"] = "true"
+			self.generatedJSON["Servers"]["UpgradeInfraStructure"] = "true"
 		else:
-			generatedJSON["Servers"]["UpgradeInfraStructure"] = "false"
+			self.generatedJSON["Servers"]["UpgradeInfraStructure"] = "false"
 
 	def setUpgradeToResearch(self, upgrade):
-		generatedJSON["Servers"]["UpgradeToResearch"] = upgrade
+		self.generatedJSON["Servers"]["UpgradeTosResearch"] = upgrade
 
 	def getGeneratedJSONPostData(self):
-		return generatedJSON
+		return self.generatedJSON
