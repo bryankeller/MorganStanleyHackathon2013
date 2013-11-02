@@ -133,7 +133,7 @@ def algorithm(jDict, replies):
 		else:
 			apDBLoad = apDBInput / apDBNodes
 
-		#total profit info
+		#total profit infod
 		profit = profit/analysisInterval
 		bank = lastReply.profitAccumulated()
 
