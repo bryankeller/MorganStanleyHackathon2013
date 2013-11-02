@@ -1,3 +1,5 @@
+# from JSONPostData import JSONPostData
+
 def algorithm(jDict, replies):
 	lastReply = replies[len(replies)-1]
 
@@ -52,16 +54,24 @@ def algorithm(jDict, replies):
 		euExecuted = euExecuted/15 
 		apExecuted = apExecuted/15 
 
+		#avg load on each server
+		naLoad = naInput / naNodes
+		euLoad = euInput / euNodes
+		apLoad = apInput / apNodes
+
 		#total profit info
 		profit = profit/15
 		bank = lastReply.profitAccumulated()
 
 		turnNo = lastReply.turnNo()
 
+		if(naLoad>100):
+			jDict.setWebNodeCounts()
+
 		print "Turn: " + str(turnNo)
-		print "[NA]  Nodes: " + str(naNodes) + ", Input: " + str(naInput) + ", Executed: " + str(naExecuted) + ", Succeeded: " + str(naSucceeded)
-		print "[EU]  Nodes: " + str(euNodes) + ", Input: " + str(euInput) + ", Executed: " + str(euExecuted) + ", Succeeded: " + str(euSucceeded)
-		print "[AP]  Nodes: " + str(apNodes) + ", Input: " + str(apInput) + ", Executed: " + str(apExecuted) + ", Succeeded: " + str(apSucceeded)
+		print "[NA]  Nodes: " + str(naNodes) + ", Input: " + str(naInput) + ", Executed: " + str(naExecuted) + ", Succeeded: " + str(naSucceeded) + ", Avg Load: " + str(naLoad)
+		print "[EU]  Nodes: " + str(euNodes) + ", Input: " + str(euInput) + ", Executed: " + str(euExecuted) + ", Succeeded: " + str(euSucceeded) + ", Avg Load: " + str(euLoad)
+		print "[AP]  Nodes: " + str(apNodes) + ", Input: " + str(apInput) + ", Executed: " + str(apExecuted) + ", Succeeded: " + str(apSucceeded) + ", Avg Load: " + str(apLoad)
 		print "Total profit $"+str(bank) + "     Average turn profit $" + str(profit)
 		print " "
 
