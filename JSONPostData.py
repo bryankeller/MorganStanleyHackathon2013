@@ -5,7 +5,7 @@ class JSONPostData:
 	generatedJSON = None;
 
 	def __init__(self):
-		generatedJSON = json.loads(open('standardJSON.json'))
+		generatedJSON = json.load(open("standardJSON.json"))
 		print generatedJSON
 
 

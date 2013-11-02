@@ -1,1 +1,1 @@
-"Servers":{"WEB":{"ServerRegions":{"EU":{"NodeCount":0}}},"JAVA":{"ServerRegions":{"NA":{"NodeCount":0}}},"DB":{"ServerRegions":{"AP":{"NodeCount":0}}}}
+{"Servers":{"WEB":{"ServerRegions":{"EU":{"NodeCount":0}}},"JAVA":{"ServerRegions":{"NA":{"NodeCount":0}}},"DB":{"ServerRegions":{"AP":{"NodeCount":0}}}}}
