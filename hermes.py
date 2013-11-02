@@ -61,8 +61,8 @@ def quickInfo(replyDict):
 	bank = replyDict['ServerState']['ProfitAccumulated']
 	profit = replyDict['ServerState']['ProfitEarned']
 	print "Turn: "+str(turn)
-	print "Turn Profit: "+str(profit)
-	print "Bankroll: "+str(bank)
+	print "Turn Profit: $"+str(profit)
+	print "Bankroll: $"+str(bank)
 	print "-------------------"
 
 if __name__ == '__main__':
