@@ -8,8 +8,8 @@ def algorithm(jDict, replies):
 	turnNo = lastReply.turnNo()
 	#print "Replies sizeee: "+str(len(replies))
 	#print "Turn Nono: "+ str(turnNo)
-	analysisInterval = 10
-	if((turnNo%analysisInterval)==0 and turnNo!=0):
+	analysisInterval = 2
+	if(turnNo!=0):
 		length = len(replies)
 		lastReply = replies[length-1]
 		#initialize web server data
@@ -156,35 +156,35 @@ def algorithm(jDict, replies):
 		naJavaAdjust = euJavaAdjust = apJavaAdjust = 0
 		naDBAdjust = euDBAdjust = apDBAdjust = 0
 
+		if(turnNo % 2 == 0):
+			#Making adjustments for web serverss
+			adjustConst = 0.005
+			upperBound = lastReply.upperLimit('WEB')*0.85
+			lowerBound = upperBound*.65
+			if (level==1):
+				multiplier = 1.05
+			elif (level==2):
+				multiplier = 1.10
 
-		#Making adjustments for web serverss
-		adjustConst = 0.005
-		upperBound = lastReply.upperLimit('WEB')*0.85
-		lowerBound = upperBound*.65
-		if (level==1):
-			multiplier = 1.05
-		elif (level==2):
-			multiplier = 1.10
+			print "cost: " + str(lastReply.reply["ServerState"]["CostPerServer"])
 
-		print "cost: " + str(lastReply.reply["ServerState"]["CostPerServer"])
+			if(naWebLoad > upperBound*multiplier):
+				naWebAdjust = int(1 + (naWebInput*adjustConst))
+			elif(naWebLoad<lowerBound*multiplier):
+				if(naWebNodes!=1):
+					naWebAdjust = int(-1 - (naWebInput*adjustConst))
 
-		if(naWebLoad > upperBound*multiplier):
-			naWebAdjust = int(1 + (naWebInput*adjustConst))
-		elif(naWebLoad<lowerBound*multiplier):
-			if(naWebNodes!=1):
-				naWebAdjust = int(-1 - (naWebInput*adjustConst))
+			if(euWebLoad > upperBound*multiplier):
+				euWebAdjust = int(1 + (euWebInput*adjustConst))
+			elif(euWebLoad<lowerBound*multiplier):
+				if(euWebNodes!=1):
+					euWebAdjust = int(-1 - (euWebInput*adjustConst))
 
-		if(euWebLoad > upperBound*multiplier):
-			euWebAdjust = int(1 + (euWebInput*adjustConst))
-		elif(euWebLoad<lowerBound*multiplier):
-			if(euWebNodes!=1):
-				euWebAdjust = int(-1 - (euWebInput*adjustConst))
-
-		if(apWebLoad > upperBound*multiplier):
-			apWebAdjust = int(1 + (apWebInput*adjustConst))
-		elif(apWebLoad<lowerBound*multiplier):
-			if(apWebNodes!=1):
-				apWebAdjust = int(-1 - (apWebInput*adjustConst))
+			if(apWebLoad > upperBound*multiplier):
+				apWebAdjust = int(1 + (apWebInput*adjustConst))
+			elif(apWebLoad<lowerBound*multiplier):
+				if(apWebNodes!=1):
+					apWebAdjust = int(-1 - (apWebInput*adjustConst))
 
 		adjustConst = 0.003
 		upperBound = lastReply.upperLimit('JAVA') * 0.9
@@ -223,39 +223,40 @@ def algorithm(jDict, replies):
 		# 	elif (apJavaNodes!=1):
 		# 		apJavaAdjust = -1
 
-		#making adjustments for java
-		if(naJavaLoad > upperBound*multiplier):
-			naJavaAdjust = int(1 + (naJavaInput*adjustConst))
-		elif(naJavaLoad < lowerBound1*multiplier):
-			if(naJavaNodes!=1):
-				naJavaAdjust = int(-1 - (naJavaInput*adjustConst))
+		if(turnNo % 5 == 0):
+			#making adjustments for java
+			if(naJavaLoad > upperBound*multiplier):
+				naJavaAdjust = int(1 + (naJavaInput*adjustConst))
+			elif(naJavaLoad < lowerBound1*multiplier):
+				if(naJavaNodes!=1):
+					naJavaAdjust = int(-1 - (naJavaInput*adjustConst))
 
-		if(euJavaLoad > upperBound*multiplier):
-			euJavaAdjust = int(1 + (euJavaInput*adjustConst))
-		elif(euJavaLoad < lowerBound1*multiplier):
-			if(euJavaNodes!=1):
-				euJavaAdjust = int(-1 - (euJavaInput*adjustConst))
+			if(euJavaLoad > upperBound*multiplier):
+				euJavaAdjust = int(1 + (euJavaInput*adjustConst))
+			elif(euJavaLoad < lowerBound1*multiplier):
+				if(euJavaNodes!=1):
+					euJavaAdjust = int(-1 - (euJavaInput*adjustConst))
 
-		if(apJavaLoad > upperBound*multiplier):
-			apJavaAdjust = int(1 + (apJavaInput*adjustConst))
-		elif(apJavaLoad < lowerBound1*multiplier):
-			if(apJavaNodes!=1):
-				apJavaAdjust = int(-1 - (apJavaInput*adjustConst))
+			if(apJavaLoad > upperBound*multiplier):
+				apJavaAdjust = int(1 + (apJavaInput*adjustConst))
+			elif(apJavaLoad < lowerBound1*multiplier):
+				if(apJavaNodes!=1):
+					apJavaAdjust = int(-1 - (apJavaInput*adjustConst))
 
-		#making adjustments for db
+		if(turnNo % 10 == 0):
+			#making adjustments for db
+			upperBound = lastReply.upperLimit('DB')*.6875
+			lowerBound = upperBound*.8
+			if(algorithm.upgradeLevel == 1):
+				upperBound *= 1.05
+			if(algorithm.upgradeLevel == 2):
+				upperBound *= 1.1
 
-		upperBound = lastReply.upperLimit('DB')*.6875
-		lowerBound = upperBound*.8
-		if(algorithm.upgradeLevel == 1):
-			upperBound *= 1.05
-		if(algorithm.upgradeLevel == 2):
-			upperBound *= 1.1
-
-		if(totalDBLoad > upperBound*multiplier):
-			euDBAdjust = 1
-		elif(totalDBLoad < lowerBound*multiplier):
-			if(euDBNodes > 1):
-				euDBAdjust = -1
+			if(totalDBLoad > upperBound*multiplier):
+				euDBAdjust = 1
+			elif(totalDBLoad < lowerBound*multiplier):
+				if(euDBNodes > 1):
+					euDBAdjust = -1
 
 
 		jDict.setWebNodeCounts(naWebAdjust, euWebAdjust, apWebAdjust)
