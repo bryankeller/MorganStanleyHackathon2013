@@ -22,6 +22,9 @@ class JSONPostData:
 		self.generatedJSON["Servers"]["DB"]["ServerRegions"]["EU"]["NodeCount"] = eu
 		self.generatedJSON["Servers"]["DB"]["ServerRegions"]["AP"]["NodeCount"] = ap
 
+	def upgradeInfraStructure(self):
+		self.generatedJSON['Servers']['UpgradeInfraStructure'] = True
+
 	def setShouldUpgradeInfraStructure(self, shouldUpgradeInfraStructure):
 		if(shouldUpgradeInfraStructure):
 			self.generatedJSON["Servers"]["UpgradeInfraStructure"] = True

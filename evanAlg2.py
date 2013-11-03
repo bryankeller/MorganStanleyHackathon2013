@@ -145,7 +145,7 @@ def algorithm(jDict, replies):
 		naJavaAdjust = euJavaAdjust = apJavaAdjust = 0
 		naDBAdjust = euDBAdjust = apDBAdjust = 0
 
-		adjustConst = 0.005
+		adjustConst = 0.004
 
 		#Making adjustments for web serverss
 		if(naWebLoad > 60):
@@ -168,32 +168,62 @@ def algorithm(jDict, replies):
 
 		adjustConst = 0.002
 
+		if(naJavaLoad > 150):
+			naJavaAdjust = 2
+		elif(naJavaLoad > 125):
+			naJavaAdjust = 1
+		elif(naJavaLoad < 95):
+			if (naJavaNodes!=1):
+				naJavaAdjust = -1
+
+		if(euJavaLoad > 150):
+			euJavaAdjust = 2
+		elif(euJavaLoad > 125):
+			euJavaAdjust = 1
+		elif(euJavaLoad < 95):
+			if (euJavaNodes!=1):
+				euJavaAdjust = -1
+
+		if(apJavaLoad > 150):
+			apJavaAdjust = 2
+		elif(apJavaLoad > 125):
+			apJavaAdjust = 1
+		elif(apJavaLoad < 95):
+			if(apJavaLoad < 60):
+				if(apJavaNodes > 3):
+					apJavaAdjust = -3
+			elif (apJavaNodes!=1):
+				apJavaAdjust = -1
+
 		#making adjustments for java
-		if(naJavaLoad > 140):
-			naJavaAdjust = int(1 + (naJavaInput*adjustConst))
-		elif(naJavaLoad < 120):
-			if(naJavaNodes!=1):
-				naJavaAdjust = int(-1 - (naJavaInput*adjustConst))
+		# if(naJavaLoad > 140):
+		# 	naJavaAdjust = int(1 + (naJavaInput*adjustConst))
+		# elif(naJavaLoad < 120):
+		# 	if(naJavaNodes!=1):
+		# 		naJavaAdjust = int(-1 - (naJavaInput*adjustConst))
 
-		if(euJavaLoad > 140):
-			euJavaAdjust = int(1 + (euJavaInput*adjustConst))
-		elif(euJavaLoad < 120):
-			if(euJavaNodes!=1):
-				euJavaAdjust = int(-1 - (euJavaInput*adjustConst))
+		# if(euJavaLoad > 140):
+		# 	euJavaAdjust = int(1 + (euJavaInput*adjustConst))
+		# elif(euJavaLoad < 120):
+		# 	if(euJavaNodes!=1):
+		# 		euJavaAdjust = int(-1 - (euJavaInput*adjustConst))
 
-		if(apJavaLoad > 140):
-			apJavaAdjust = int(1 + (apJavaInput*adjustConst))
-		elif(apJavaLoad < 120):
-			if(apJavaNodes!=1):
-				apJavaAdjust = int(-1 - (apJavaInput*adjustConst))
+		# if(apJavaLoad > 140):
+		# 	apJavaAdjust = int(1 + (apJavaInput*adjustConst))
+		# elif(apJavaLoad < 120):
+		# 	if(apJavaNodes!=1):
+		# 		apJavaAdjust = int(-1 - (apJavaInput*adjustConst))
 
 		#making adjustments for db
-		if(totalDBLoad > 250):
+
+		if(totalDBLoad > 275):
 			euDBAdjust = 1
-		elif(totalDBLoad < 200):
-			if(euDBNodes > 3):
+		elif(totalDBLoad < 220):
+			if(euDBNodes > 1):
 				euDBAdjust = -1
 
+		if(turnNo == 1500):
+			jDict.upgradeInfraStructure()
 
 		jDict.setWebNodeCounts(naWebAdjust, euWebAdjust, apWebAdjust)
 		jDict.setJavaNodeCounts(naJavaAdjust, euJavaAdjust, apJavaAdjust)
