@@ -7,14 +7,15 @@ from ProcessedReply import ProcessedReply
 from JSONPostData import JSONPostData
 #import bryanAlg
 #import liamAlg
-import evanAlg
+import evanAlg3
 
 
 def main():
-	print "Enter turn printing interval: "
-	num = int(raw_input())
+	# print "Enter turn printing interval: "
+	# num = int(raw_input())
 	initializeGame()
-	processTurn(num)
+	processTurn(0)
+	# processTurn(num)
 
 def initializeGame():
 	headers = {'content-type': 'application/json'}
@@ -38,7 +39,7 @@ def processTurn(num):
 		lastReply = ProcessedReply(lastReply)
 		replies.append(lastReply)
 		emptyPost = JSONPostData()
-		post = evanAlg.algorithm(emptyPost, replies) #returns the dict of json file
+		post = evanAlg3.algorithm(emptyPost, replies) #returns the dict of json file
 		change(post)
 		posts.append(post)
 		# printStats(lastReply)

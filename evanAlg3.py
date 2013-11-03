@@ -1,16 +1,13 @@
-# from JSONPostData import JSONPostData
+import bryanRateOfChange
 
 def algorithm(jDict, replies):
 	lastReply = replies[len(replies)-1]
 
 	#generates a summary report every 15 turns
 	turnNo = lastReply.turnNo()
-	#print "Replies sizeee: "+str(len(replies))
-	#print "Turn Nono: "+ str(turnNo)
 	analysisInterval = 10
-	if((turnNo%analysisInterval)==0 and turnNo!=0):
-		length = len(replies)
-		lastReply = replies[length-1]
+
+	if((turnNo%analysisInterval)==0 and turnNo > 0):
 		#initialize web server data
 		naWebSucceeded = euWebSucceeded = apWebSucceeded = 0
 		naWebExecuted = euWebExecuted = apWebExecuted = 0
@@ -32,53 +29,51 @@ def algorithm(jDict, replies):
 		profit = 0
 
 		#replies = reversed(replies)
-		for i in range(length-analysisInterval,length):
+		for reply in replies[-analysisInterval:]:
 			#Web Server Data
-			naWebInput = naWebInput + replies[i].inputNums('WEB')['na']
-			euWebInput = euWebInput + replies[i].inputNums('WEB')['eu']
-			apWebInput = apWebInput + replies[i].inputNums('WEB')['ap']
-			naWebExecuted = naWebExecuted + replies[i].executedNums('WEB')['na']
-			euWebExecuted = euWebExecuted + replies[i].executedNums('WEB')['eu']
-			apWebExecuted = apWebExecuted + replies[i].executedNums('WEB')['ap']
-			naWebSucceeded = naWebSucceeded + replies[i].successNums('WEB')['na']
-			euWebSucceeded = euWebSucceeded + replies[i].successNums('WEB')['eu']
-			apWebSucceeded = apWebSucceeded + replies[i].successNums('WEB')['ap']
+			naWebInput = naWebInput + reply.inputNums('WEB')['na']
+			euWebInput = euWebInput + reply.inputNums('WEB')['eu']
+			apWebInput = apWebInput + reply.inputNums('WEB')['ap']
+			naWebExecuted = naWebExecuted + reply.executedNums('WEB')['na']
+			euWebExecuted = euWebExecuted + reply.executedNums('WEB')['eu']
+			apWebExecuted = apWebExecuted + reply.executedNums('WEB')['ap']
+			naWebSucceeded = naWebSucceeded + reply.successNums('WEB')['na']
+			euWebSucceeded = euWebSucceeded + reply.successNums('WEB')['eu']
+			apWebSucceeded = apWebSucceeded + reply.successNums('WEB')['ap']
 			naWebNodes = lastReply.nodeCounts('WEB')['na']
 			euWebNodes = lastReply.nodeCounts('WEB')['eu']
 			apWebNodes = lastReply.nodeCounts('WEB')['ap']
 
 			#Java Server Data
-			naJavaInput = naJavaInput + replies[i].inputNums('JAVA')['na']
-			euJavaInput = euJavaInput + replies[i].inputNums('JAVA')['eu']
-			apJavaInput = apJavaInput + replies[i].inputNums('JAVA')['ap']
-			naJavaExecuted = naJavaExecuted + replies[i].executedNums('JAVA')['na']
-			euJavaExecuted = euJavaExecuted + replies[i].executedNums('JAVA')['eu']
-			apJavaExecuted = apJavaExecuted + replies[i].executedNums('JAVA')['ap']
-			naJavaSucceeded = naJavaSucceeded + replies[i].successNums('JAVA')['na']
-			euJavaSucceeded = euJavaSucceeded + replies[i].successNums('JAVA')['eu']
-			apJavaSucceeded = apJavaSucceeded + replies[i].successNums('JAVA')['ap']
+			naJavaInput = naJavaInput + reply.inputNums('JAVA')['na']
+			euJavaInput = euJavaInput + reply.inputNums('JAVA')['eu']
+			apJavaInput = apJavaInput + reply.inputNums('JAVA')['ap']
+			naJavaExecuted = naJavaExecuted + reply.executedNums('JAVA')['na']
+			euJavaExecuted = euJavaExecuted + reply.executedNums('JAVA')['eu']
+			apJavaExecuted = apJavaExecuted + reply.executedNums('JAVA')['ap']
+			naJavaSucceeded = naJavaSucceeded + reply.successNums('JAVA')['na']
+			euJavaSucceeded = euJavaSucceeded + reply.successNums('JAVA')['eu']
+			apJavaSucceeded = apJavaSucceeded + reply.successNums('JAVA')['ap']
 			naJavaNodes = lastReply.nodeCounts('JAVA')['na']
 			euJavaNodes = lastReply.nodeCounts('JAVA')['eu']
 			apJavaNodes = lastReply.nodeCounts('JAVA')['ap']
 
 			#DB Server Data
-			naDBInput = naDBInput + replies[i].inputNums('DB')['na']
-			euDBInput = euDBInput + replies[i].inputNums('DB')['eu']
-			apDBInput = apDBInput + replies[i].inputNums('DB')['ap']
-			naDBExecuted = naDBExecuted + replies[i].executedNums('DB')['na']
-			euDBExecuted = euDBExecuted + replies[i].executedNums('DB')['eu']
-			apDBExecuted = apDBExecuted + replies[i].executedNums('DB')['ap']
-			naDBSucceeded = naDBSucceeded + replies[i].successNums('DB')['na']
-			euDBSucceeded = euDBSucceeded + replies[i].successNums('DB')['eu']
-			apDBSucceeded = apDBSucceeded + replies[i].successNums('DB')['ap']
+			naDBInput = naDBInput + reply.inputNums('DB')['na']
+			euDBInput = euDBInput + reply.inputNums('DB')['eu']
+			apDBInput = apDBInput + reply.inputNums('DB')['ap']
+			naDBExecuted = naDBExecuted + reply.executedNums('DB')['na']
+			euDBExecuted = euDBExecuted + reply.executedNums('DB')['eu']
+			apDBExecuted = apDBExecuted + reply.executedNums('DB')['ap']
+			naDBSucceeded = naDBSucceeded + reply.successNums('DB')['na']
+			euDBSucceeded = euDBSucceeded + reply.successNums('DB')['eu']
+			apDBSucceeded = apDBSucceeded + reply.successNums('DB')['ap']
 			naDBNodes = lastReply.nodeCounts('DB')['na']
 			euDBNodes = lastReply.nodeCounts('DB')['eu']
 			apDBNodes = lastReply.nodeCounts('DB')['ap']
 
-			profit = profit + replies[i].profitEarned()
+			profit = profit + reply.profitEarned()
 			#print "Turn " + str(i) + "    " + str(replies[i]["ServerState"]["ProfitEarned"]) + "   " + str(profit)
-
-		lastReply = replies[length-1]
 
 		#Averaging Web Servers
 		naWebInput = naWebInput/analysisInterval
@@ -151,7 +146,7 @@ def algorithm(jDict, replies):
 
 		#Making adjustments for web serverss
 		adjustConst = 0.005
-		upperBound = lastReply.upperLimit('WEB')*0.85
+		upperBound = 40
 		lowerBound = upperBound*.65
 		if(algorithm.upgradeLevel == 1):
 			upperBound *= 1.05
@@ -178,68 +173,41 @@ def algorithm(jDict, replies):
 			if(apWebNodes!=1):
 				apWebAdjust = int(-1 - (apWebInput*adjustConst))
 
-		adjustConst = 0.003
-		upperBound = lastReply.upperLimit('JAVA') * 0.9
+		roch = bryanRateOfChange.getRateOfChange(replies[-analysisInterval:], "WEB")
+
+		roch = [x*.001 for x in roch]
+		print roch
+		# adjustConst = 0.003
+		upperBound = 120
 		lowerBound1 = upperBound*0.6
 
 		if(algorithm.upgradeLevel == 1):
 			upperBound *= 1.05
 		if(algorithm.upgradeLevel == 2):
 			upperBound *= 1.1
-		# upperBound = lastReply.upperLimit('JAVA')
-		# lowerBound1 = upperBound*.833
-		# lowerBound2 = upperBound*.633
-		# lowerBound3 = upperBound*.480
-
-		# if(naJavaLoad > upperBound):
-		# 	naJavaAdjust = 2
-		# elif(naJavaLoad > lowerBound1):
-		# 	naJavaAdjust = 1
-		# elif(naJavaLoad < lowerBound2):
-		# 	if (naJavaNodes!=1):
-		# 		naJavaAdjust = -1
-
-		# if(euJavaLoad > upperBound):
-		# 	euJavaAdjust = 2
-		# elif(euJavaLoad > lowerBound1):
-		# 	euJavaAdjust = 1
-		# elif(euJavaLoad < lowerBound2):
-		# 	if (euJavaNodes!=1):
-		# 		euJavaAdjust = -1
-
-		# if(apJavaLoad > upperBound):
-		# 	apJavaAdjust = 2
-		# elif(apJavaLoad > lowerBound1):
-		# 	apJavaAdjust = 1
-		# elif(apJavaLoad < lowerBound2):
-		# 	if(apJavaLoad < lowerBound3):
-		# 		if(apJavaNodes > 3):
-		# 			apJavaAdjust = -3
-		# 	elif (apJavaNodes!=1):
-		# 		apJavaAdjust = -1
 
 		#making adjustments for java
 		if(naJavaLoad > upperBound):
-			naJavaAdjust = int(1 + (naJavaInput*adjustConst))
+			naJavaAdjust = int(1 + (naJavaInput*roch[0]))
 		elif(naJavaLoad < lowerBound1):
 			if(naJavaNodes!=1):
-				naJavaAdjust = int(-1 - (naJavaInput*adjustConst))
+				naJavaAdjust = int(-1 - (naJavaInput*roch[0]))
 
 		if(euJavaLoad > upperBound):
-			euJavaAdjust = int(1 + (euJavaInput*adjustConst))
+			euJavaAdjust = int(1 + (euJavaInput*roch[1]))
 		elif(euJavaLoad < lowerBound1):
 			if(euJavaNodes!=1):
-				euJavaAdjust = int(-1 - (euJavaInput*adjustConst))
+				euJavaAdjust = int(-1 - (euJavaInput*roch[1]))
 
 		if(apJavaLoad > upperBound):
-			apJavaAdjust = int(1 + (apJavaInput*adjustConst))
+			apJavaAdjust = int(1 + (apJavaInput*roch[2]))
 		elif(apJavaLoad < lowerBound1):
 			if(apJavaNodes!=1):
-				apJavaAdjust = int(-1 - (apJavaInput*adjustConst))
+				apJavaAdjust = int(-1 - (apJavaInput*roch[2]))
 
 		#making adjustments for db
 
-		upperBound = lastReply.upperLimit('DB')*.6875
+		upperBound = 280
 		lowerBound = upperBound*.8
 		if(algorithm.upgradeLevel == 1):
 			upperBound *= 1.05
@@ -251,10 +219,6 @@ def algorithm(jDict, replies):
 		elif(totalDBLoad < lowerBound):
 			if(euDBNodes > 1):
 				euDBAdjust = -1
-
-		# if(turnNo == 10):
-		# 	euDBAdjust = -1
-		# 	naDBAdjust = 1
 
 		jDict.setWebNodeCounts(naWebAdjust, euWebAdjust, apWebAdjust)
 		jDict.setJavaNodeCounts(naJavaAdjust, euJavaAdjust, apJavaAdjust)
