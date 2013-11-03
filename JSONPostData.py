@@ -6,6 +6,7 @@ class JSONPostData:
 
 	def __init__(self):
 		self.generatedJSON = json.load(open("standardJSON.json"))
+		print self.generatedJSON
 	
 	def setWebNodeCounts(self, na=0, eu=0, ap=0):
 		self.generatedJSON["Servers"]["WEB"]["ServerRegions"]["NA"]["NodeCount"] = na
@@ -24,12 +25,6 @@ class JSONPostData:
 
 	def upgradeInfraStructure(self):
 		self.generatedJSON['Servers']['UpgradeInfraStructure'] = True
-
-	def setShouldUpgradeInfraStructure(self, shouldUpgradeInfraStructure):
-		if(shouldUpgradeInfraStructure):
-			self.generatedJSON["Servers"]["UpgradeInfraStructure"] = True
-		else:
-			self.generatedJSON["Servers"]["UpgradeInfraStructure"] = False
 
 	def setUpgradeToResearch(self, upgrade):
 		self.generatedJSON["Servers"]["UpgradeTosResearch"] = upgrade

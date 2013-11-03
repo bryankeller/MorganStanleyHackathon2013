@@ -133,7 +133,10 @@ def algorithm(jDict, replies):
 		else:
 			apDBLoad = apDBInput / apDBNodes
 
-		totalDBLoad = (naDBInput + euDBInput + apDBInput) / euDBNodes
+		if naDBNodes!=0:
+			totalDBLoad = (naDBInput + euDBInput + apDBInput) / naDBNodes
+		else:
+			totalDBLoad = 0
 
 		#total profit infod
 		profit = profit/analysisInterval
@@ -147,9 +150,9 @@ def algorithm(jDict, replies):
 
 
 		#Making adjustments for web serverss
-		adjustConst = 0.004
-		upperBound = lastReply.upperLimit('WEB')
-		lowerBound = upperBound*.8
+		adjustConst = 0.005
+		upperBound = lastReply.upperLimit('WEB')*0.85
+		lowerBound = upperBound*.65
 
 		if(naWebLoad > upperBound):
 			naWebAdjust = int(1 + (naWebInput*adjustConst))
@@ -229,18 +232,26 @@ def algorithm(jDict, replies):
 		lowerBound = upperBound*.8
 
 		if(totalDBLoad > upperBound):
-			euDBAdjust = 1
+			naDBAdjust = 1
 		elif(totalDBLoad < lowerBound):
-			if(euDBNodes > 1):
-				euDBAdjust = -1
+			if(naDBNodes > 1):
+				naDBAdjust = -1
 
-		if(turnNo == 1500):
+		if(turnNo == 10):
+			euDBAdjust = -1
+			naDBAdjust = 1
+
+		if(turnNo == 5210):
+			jDict.upgradeInfraStructure()
+		if(turnNo == 5220):
 			jDict.upgradeInfraStructure()
 
 		jDict.setWebNodeCounts(naWebAdjust, euWebAdjust, apWebAdjust)
 		jDict.setJavaNodeCounts(naJavaAdjust, euJavaAdjust, apJavaAdjust)
 		jDict.setDBNodeCounts(naDBAdjust, euDBAdjust, apDBAdjust)
 
+		val = lastReply.reply["ServerState"]["InfraStructureUpgradeState"]["Key"]
+		error = lastReply.error()
 
 		print "Turn: " + str(turnNo)
 		print "## WEB SERVERS ##"
@@ -258,6 +269,7 @@ def algorithm(jDict, replies):
 		print "[EU]  Nodes: " + str(euDBNodes) + ", Input: " + str(euDBInput) + ", Executed: " + str(euDBExecuted) + ", Succeeded: " + str(euDBSucceeded) + ", Total Load: " + str(totalDBLoad)
 		print "[AP]  Nodes: " + str(apDBNodes) + ", Input: " + str(apDBInput) + ", Executed: " + str(apDBExecuted) + ", Succeeded: " + str(apDBSucceeded) + ", Avg Load: " + str(apDBLoad)
 		print "Total profit $"+str(bank) + "     Average turn profit $" + str(profit)
+		print "Inf Level: " + str(val) + "   Error: " + str(error)
 		print " "
 		print " "
 		print " "
