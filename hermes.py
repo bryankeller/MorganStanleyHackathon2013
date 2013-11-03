@@ -5,9 +5,9 @@ from pprint import pprint
 import time
 from ProcessedReply import ProcessedReply
 from JSONPostData import JSONPostData
-import bryanAlg
+#import bryanAlg
 #import liamAlg
-import evanAlg
+import evanAlg2
 
 
 def main():
@@ -38,7 +38,7 @@ def processTurn(num):
 		lastReply = ProcessedReply(lastReply)
 		replies.append(lastReply)
 		emptyPost = JSONPostData()
-		post = evanAlg.algorithm(emptyPost, replies) #returns the dict of json file
+		post = evanAlg2.algorithm(emptyPost, replies) #returns the dict of json file
 		change(post)
 		posts.append(post)
 		# printStats(lastReply)
