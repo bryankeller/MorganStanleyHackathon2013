@@ -2,7 +2,7 @@
 
 def algorithm(jDict, replies):
 	lastReply = replies[len(replies)-1]
-
+	level = 0
 	#generates a summary report every 15 turns
 	turnNo = lastReply.turnNo()
 	#print "Replies sizeee: "+str(len(replies))
@@ -133,8 +133,8 @@ def algorithm(jDict, replies):
 		else:
 			apDBLoad = apDBInput / apDBNodes
 
-		if naDBNodes!=0:
-			totalDBLoad = (naDBInput + euDBInput + apDBInput) / naDBNodes
+		if euDBNodes!=0:
+			totalDBLoad = (naDBInput + euDBInput + apDBInput) / euDBNodes
 		else:
 			totalDBLoad = 0
 
@@ -148,33 +148,44 @@ def algorithm(jDict, replies):
 		naJavaAdjust = euJavaAdjust = apJavaAdjust = 0
 		naDBAdjust = euDBAdjust = apDBAdjust = 0
 
+		val = lastReply.reply["ServerState"]["InfraStructureUpgradeState"]["Key"]
+		if val=="LEVEL1":
+			level = 1
+		elif val=="LEVEL2":
+			level = 2
 
+		if(level==0):#default infra upgrade
+			multiplier = 0
+		elif(level==1):#level one upgrade
+			multiplier = 20
+		elif(level==2):#level two upgrade
+			multiplier = 40
 		#Making adjustments for web serverss
 		adjustConst = 0.005
-		upperBound = lastReply.upperLimit('WEB')*0.85
-		lowerBound = upperBound*.65
+		upperBound = int(lastReply.upperLimit('WEB')*0.8)
+		lowerBound = int(upperBound*.65)
 
-		if(naWebLoad > upperBound):
+		if(naWebLoad > upperBound+multiplier):
 			naWebAdjust = int(1 + (naWebInput*adjustConst))
-		elif(naWebLoad<lowerBound):
+		elif(naWebLoad<lowerBound+multiplier):
 			if(naWebNodes!=1):
 				naWebAdjust = int(-1 - (naWebInput*adjustConst))
 
-		if(euWebLoad > upperBound):
+		if(euWebLoad > upperBound+multiplier):
 			euWebAdjust = int(1 + (euWebInput*adjustConst))
-		elif(euWebLoad<lowerBound):
+		elif(euWebLoad<lowerBound+multiplier):
 			if(euWebNodes!=1):
 				euWebAdjust = int(-1 - (euWebInput*adjustConst))
 
-		if(apWebLoad > upperBound):
+		if(apWebLoad > upperBound+multiplier):
 			apWebAdjust = int(1 + (apWebInput*adjustConst))
-		elif(apWebLoad<lowerBound):
+		elif(apWebLoad<lowerBound+multiplier):
 			if(apWebNodes!=1):
 				apWebAdjust = int(-1 - (apWebInput*adjustConst))
 
 		adjustConst = 0.003
-		upperBound = lastReply.upperLimit('JAVA') * 0.9
-		lowerBound1 = upperBound*0.6
+		upperBound = int(lastReply.upperLimit('JAVA') * 0.9)
+		lowerBound1 = int(upperBound*0.6)
 		# upperBound = lastReply.upperLimit('JAVA')
 		# lowerBound1 = upperBound*.833
 		# lowerBound2 = upperBound*.633
@@ -208,63 +219,57 @@ def algorithm(jDict, replies):
 		# 		apJavaAdjust = -1
 
 		#making adjustments for java
-		if(naJavaLoad > upperBound):
+		if(naJavaLoad > upperBound+multiplier):
 			naJavaAdjust = int(1 + (naJavaInput*adjustConst))
-		elif(naJavaLoad < lowerBound1):
+		elif(naJavaLoad < lowerBound1+multiplier):
 			if(naJavaNodes!=1):
 				naJavaAdjust = int(-1 - (naJavaInput*adjustConst))
 
-		if(euJavaLoad > upperBound):
+		if(euJavaLoad > upperBound+multiplier):
 			euJavaAdjust = int(1 + (euJavaInput*adjustConst))
-		elif(euJavaLoad < lowerBound1):
+		elif(euJavaLoad < lowerBound1+multiplier):
 			if(euJavaNodes!=1):
 				euJavaAdjust = int(-1 - (euJavaInput*adjustConst))
 
-		if(apJavaLoad > upperBound):
+		if(apJavaLoad > upperBound+multiplier):
 			apJavaAdjust = int(1 + (apJavaInput*adjustConst))
-		elif(apJavaLoad < lowerBound1):
+		elif(apJavaLoad < lowerBound1+multiplier):
 			if(apJavaNodes!=1):
 				apJavaAdjust = int(-1 - (apJavaInput*adjustConst))
 
 		#making adjustments for db
 
-		upperBound = lastReply.upperLimit('DB')*.6875
-		lowerBound = upperBound*.8
+		upperBound = int(lastReply.upperLimit('DB')*.6875)
+		lowerBound = int(upperBound*.8)
 
-		if(totalDBLoad > upperBound):
-			naDBAdjust = 1
-		elif(totalDBLoad < lowerBound):
-			if(naDBNodes > 1):
-				naDBAdjust = -1
-
-		if(turnNo == 10):
-			euDBAdjust = -1
-			naDBAdjust = 1
-
-		if(turnNo == 5210):
-			jDict.upgradeInfraStructure()
-		if(turnNo == 5220):
-			jDict.upgradeInfraStructure()
+		if(totalDBLoad > upperBound+multiplier):
+			euDBAdjust = 1
+		elif(totalDBLoad < lowerBound+multiplier):
+			if(euDBNodes > 1):
+				euDBAdjust = -1
 
 		jDict.setWebNodeCounts(naWebAdjust, euWebAdjust, apWebAdjust)
 		jDict.setJavaNodeCounts(naJavaAdjust, euJavaAdjust, apJavaAdjust)
 		jDict.setDBNodeCounts(naDBAdjust, euDBAdjust, apDBAdjust)
 
-		val = lastReply.reply["ServerState"]["InfraStructureUpgradeState"]["Key"]
 		error = lastReply.error()
 
 		print "Turn: " + str(turnNo)
+		print "Multipier: " + str(multiplier)
 		print "## WEB SERVERS ##"
+		print "Limit: " + str(lastReply.upperLimit('WEB'))
 		print "[NA]  Nodes: " + str(naWebNodes) + ", Input: " + str(naWebInput) + ", Executed: " + str(naWebExecuted) + ", Succeeded: " + str(naWebSucceeded) + ", Avg Load: " + str(naWebLoad)
 		print "[EU]  Nodes: " + str(euWebNodes) + ", Input: " + str(euWebInput) + ", Executed: " + str(euWebExecuted) + ", Succeeded: " + str(euWebSucceeded) + ", Avg Load: " + str(euWebLoad)
 		print "[AP]  Nodes: " + str(apWebNodes) + ", Input: " + str(apWebInput) + ", Executed: " + str(apWebExecuted) + ", Succeeded: " + str(apWebSucceeded) + ", Avg Load: " + str(apWebLoad)
 		print "  "
 		print "## Java SERVERS ##"
+		print "Limit: " + str(lastReply.upperLimit('JAVA'))
 		print "[NA]  Nodes: " + str(naJavaNodes) + ", Input: " + str(naJavaInput) + ", Executed: " + str(naJavaExecuted) + ", Succeeded: " + str(naJavaSucceeded) + ", Avg Load: " + str(naJavaLoad)
 		print "[EU]  Nodes: " + str(euJavaNodes) + ", Input: " + str(euJavaInput) + ", Executed: " + str(euJavaExecuted) + ", Succeeded: " + str(euJavaSucceeded) + ", Avg Load: " + str(euJavaLoad)
 		print "[AP]  Nodes: " + str(apJavaNodes) + ", Input: " + str(apJavaInput) + ", Executed: " + str(apJavaExecuted) + ", Succeeded: " + str(apJavaSucceeded) + ", Avg Load: " + str(apJavaLoad)
 		print "  "
 		print "## DB SERVERS ##"
+		print "Limit: " + str(lastReply.upperLimit('DB'))
 		print "[NA]  Nodes: " + str(naDBNodes) + ", Input: " + str(naDBInput) + ", Executed: " + str(naDBExecuted) + ", Succeeded: " + str(naDBSucceeded) + ", Avg Load: " + str(naDBLoad)
 		print "[EU]  Nodes: " + str(euDBNodes) + ", Input: " + str(euDBInput) + ", Executed: " + str(euDBExecuted) + ", Succeeded: " + str(euDBSucceeded) + ", Total Load: " + str(totalDBLoad)
 		print "[AP]  Nodes: " + str(apDBNodes) + ", Input: " + str(apDBInput) + ", Executed: " + str(apDBExecuted) + ", Succeeded: " + str(apDBSucceeded) + ", Avg Load: " + str(apDBLoad)

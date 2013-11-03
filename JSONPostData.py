@@ -6,7 +6,6 @@ class JSONPostData:
 
 	def __init__(self):
 		self.generatedJSON = json.load(open("standardJSON.json"))
-		print self.generatedJSON
 	
 	def setWebNodeCounts(self, na=0, eu=0, ap=0):
 		self.generatedJSON["Servers"]["WEB"]["ServerRegions"]["NA"]["NodeCount"] = na
