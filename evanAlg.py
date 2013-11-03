@@ -169,57 +169,59 @@ def algorithm(jDict, replies):
 			if(apWebNodes!=1):
 				apWebAdjust = int(-1 - (apWebInput*adjustConst))
 
-		adjustConst = 0.002
-		upperBound = lastReply.upperLimit('JAVA')
-		lowerBound1 = upperBound*.833
-		lowerBound2 = upperBound*.633
-		lowerBound3 = upperBound*.480
+		adjustConst = 0.003
+		upperBound = lastReply.upperLimit('JAVA') * 0.9
+		lowerBound1 = upperBound*0.6
+		# upperBound = lastReply.upperLimit('JAVA')
+		# lowerBound1 = upperBound*.833
+		# lowerBound2 = upperBound*.633
+		# lowerBound3 = upperBound*.480
 
-		if(naJavaLoad > upperBound):
-			naJavaAdjust = 2
-		elif(naJavaLoad > lowerBound1):
-			naJavaAdjust = 1
-		elif(naJavaLoad < lowerBound2):
-			if (naJavaNodes!=1):
-				naJavaAdjust = -1
+		# if(naJavaLoad > upperBound):
+		# 	naJavaAdjust = 2
+		# elif(naJavaLoad > lowerBound1):
+		# 	naJavaAdjust = 1
+		# elif(naJavaLoad < lowerBound2):
+		# 	if (naJavaNodes!=1):
+		# 		naJavaAdjust = -1
 
-		if(euJavaLoad > upperBound):
-			euJavaAdjust = 2
-		elif(euJavaLoad > lowerBound1):
-			euJavaAdjust = 1
-		elif(euJavaLoad < lowerBound2):
-			if (euJavaNodes!=1):
-				euJavaAdjust = -1
+		# if(euJavaLoad > upperBound):
+		# 	euJavaAdjust = 2
+		# elif(euJavaLoad > lowerBound1):
+		# 	euJavaAdjust = 1
+		# elif(euJavaLoad < lowerBound2):
+		# 	if (euJavaNodes!=1):
+		# 		euJavaAdjust = -1
 
-		if(apJavaLoad > upperBound):
-			apJavaAdjust = 2
-		elif(apJavaLoad > lowerBound1):
-			apJavaAdjust = 1
-		elif(apJavaLoad < lowerBound2):
-			if(apJavaLoad < lowerBound3):
-				if(apJavaNodes > 3):
-					apJavaAdjust = -3
-			elif (apJavaNodes!=1):
-				apJavaAdjust = -1
+		# if(apJavaLoad > upperBound):
+		# 	apJavaAdjust = 2
+		# elif(apJavaLoad > lowerBound1):
+		# 	apJavaAdjust = 1
+		# elif(apJavaLoad < lowerBound2):
+		# 	if(apJavaLoad < lowerBound3):
+		# 		if(apJavaNodes > 3):
+		# 			apJavaAdjust = -3
+		# 	elif (apJavaNodes!=1):
+		# 		apJavaAdjust = -1
 
 		#making adjustments for java
-		# if(naJavaLoad > 140):
-		# 	naJavaAdjust = int(1 + (naJavaInput*adjustConst))
-		# elif(naJavaLoad < 120):
-		# 	if(naJavaNodes!=1):
-		# 		naJavaAdjust = int(-1 - (naJavaInput*adjustConst))
+		if(naJavaLoad > upperBound):
+			naJavaAdjust = int(1 + (naJavaInput*adjustConst))
+		elif(naJavaLoad < lowerBound1):
+			if(naJavaNodes!=1):
+				naJavaAdjust = int(-1 - (naJavaInput*adjustConst))
 
-		# if(euJavaLoad > 140):
-		# 	euJavaAdjust = int(1 + (euJavaInput*adjustConst))
-		# elif(euJavaLoad < 120):
-		# 	if(euJavaNodes!=1):
-		# 		euJavaAdjust = int(-1 - (euJavaInput*adjustConst))
+		if(euJavaLoad > upperBound):
+			euJavaAdjust = int(1 + (euJavaInput*adjustConst))
+		elif(euJavaLoad < lowerBound1):
+			if(euJavaNodes!=1):
+				euJavaAdjust = int(-1 - (euJavaInput*adjustConst))
 
-		# if(apJavaLoad > 140):
-		# 	apJavaAdjust = int(1 + (apJavaInput*adjustConst))
-		# elif(apJavaLoad < 120):
-		# 	if(apJavaNodes!=1):
-		# 		apJavaAdjust = int(-1 - (apJavaInput*adjustConst))
+		if(apJavaLoad > upperBound):
+			apJavaAdjust = int(1 + (apJavaInput*adjustConst))
+		elif(apJavaLoad < lowerBound1):
+			if(apJavaNodes!=1):
+				apJavaAdjust = int(-1 - (apJavaInput*adjustConst))
 
 		#making adjustments for db
 
