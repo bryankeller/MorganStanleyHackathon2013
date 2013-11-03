@@ -29,6 +29,9 @@ class ProcessedReply:
 		apTran = self.reply["ServerState"]["ServerTiers"][serverType]["ServerRegions"]["AP"]["NoOfTransactionsInput"]
 		return {'na' : naTran, 'eu' : euTran, 'ap' : apTran}
 
+	def upperLimit(self, serverType):
+		return self.reply["ServerState"]["ServerTiers"][serverType]["ServerPerformance"]["CapactityLevels"][2]["UpperLimit"]
+
 	def turnNo(self):
 		return self.reply['ServerState']['TurnNo']
 
