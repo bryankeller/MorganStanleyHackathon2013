@@ -156,7 +156,7 @@ def algorithm(jDict, replies):
 		naJavaAdjust = euJavaAdjust = apJavaAdjust = 0
 		naDBAdjust = euDBAdjust = apDBAdjust = 0
 
-		if(turnNo % 2 == 0):
+		if(turnNo % 5 == 0):
 			#Making adjustments for web serverss
 			adjustConst = 0.005
 			upperBound = lastReply.upperLimit('WEB')*0.85
@@ -223,7 +223,7 @@ def algorithm(jDict, replies):
 		# 	elif (apJavaNodes!=1):
 		# 		apJavaAdjust = -1
 
-		if(turnNo % 5 == 0):
+		if(turnNo % 8 == 0):
 			#making adjustments for java
 			if(naJavaLoad > upperBound*multiplier):
 				naJavaAdjust = int(1 + (naJavaInput*adjustConst))
@@ -243,7 +243,7 @@ def algorithm(jDict, replies):
 				if(apJavaNodes!=1):
 					apJavaAdjust = int(-1 - (apJavaInput*adjustConst))
 
-		if(turnNo % 10 == 0):
+		if(turnNo % 12 == 0):
 			#making adjustments for db
 			upperBound = lastReply.upperLimit('DB')*.6875
 			lowerBound = upperBound*.8
