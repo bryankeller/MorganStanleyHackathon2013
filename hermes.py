@@ -7,7 +7,7 @@ from ProcessedReply import ProcessedReply
 from JSONPostData import JSONPostData
 #import bryanAlg
 #import liamAlg
-import evanAlg3
+import evanAlg
 
 
 def main():
@@ -39,7 +39,7 @@ def processTurn(num):
 		lastReply = ProcessedReply(lastReply)
 		replies.append(lastReply)
 		emptyPost = JSONPostData()
-		post = evanAlg3.algorithm(emptyPost, replies) #returns the dict of json file
+		post = evanAlg.algorithm(emptyPost, replies) #returns the dict of json file
 		change(post)
 		posts.append(post)
 		# printStats(lastReply)
